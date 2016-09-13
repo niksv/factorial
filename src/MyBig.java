@@ -15,6 +15,11 @@ public class MyBig {
 
     public MyBig(int v) {
         value = new ArrayList<>();
+        if (v == 0) {
+            value.add((short) 0);
+            return;
+        }
+
         while(v > 0) {
             value.add((short) (v % 10));
             v /= 10;
@@ -22,13 +27,18 @@ public class MyBig {
     }
 
     MyBig mul(MyBig second) {
-        return null;
+        BigMultiplexer b = new BigMultiplexer();
+        return b.mul(this, second);
     }
 
     void addToIt(MyBig second) {
+        addToIt(second, 0);
+    }
+
+    void addToIt(MyBig second, int shift) {
         for (int i = 0; i < second.size(); i++) {
-            int j = i;
-            int n = second.value.get(j);
+            int j = i + shift;
+            int n = second.value.get(i);
             do {
                 while (value.size() <= j) {
                     value.add((short) 0);
